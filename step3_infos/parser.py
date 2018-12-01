@@ -84,9 +84,9 @@ while True:
                     if "직업/직책" in cell.text:
                         if len(cell.contents)>1:
                             j_and_p = re.split('/',cell.contents[1])
-                            if len(j_and_p) > 1:
+                            if len(j_and_p) > 0:
                                 job = j_and_p[0].strip()
-                            if len(j_and_p) > 2:
+                            if len(j_and_p) > 1:
                                 position = j_and_p[1].strip()
                     #address
                     if "주소" in cell.text:
