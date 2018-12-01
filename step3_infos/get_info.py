@@ -1,8 +1,5 @@
 #!/usr/bin/python3
 
-print("Author : Jong Hyun Park")
-
-
 from bs4 import BeautifulSoup
 import requests
 import re

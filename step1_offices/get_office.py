@@ -14,6 +14,7 @@ while True:
     if not line: break
 
     words = line.split()
+    print(words)
 
     file_name = '../data/offices/' + words[0] + '_' + words[1]
     fw = open(file_name, 'w', newline='')
