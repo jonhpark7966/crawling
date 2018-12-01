@@ -83,8 +83,11 @@ while True:
                     #job & position
                     if "직업/직책" in cell.text:
                         if len(cell.contents)>1:
-                            job = re.split('/',cell.contents[1])[0].strip()
-                            position = re.split('/',cell.contents[1])[1].strip()
+                            j_and_p = re.split('/',cell.contents[1])
+                            if len(j_and_p) > 1:
+                                job = j_and_p[0].strip()
+                            if len(j_and_p) > 2:
+                                position = j_and_p[1].strip()
                     #address
                     if "주소" in cell.text:
                         if len(cell.contents)>1:
@@ -177,4 +180,4 @@ while True:
         a_html_doc = ''
 
 f.close()
-csv.close()
+csv_f.close()
