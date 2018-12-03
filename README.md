@@ -1,8 +1,11 @@
-# crawling
+# Korean Lawer Crawling
 
-run step 1, 2, 3. -> data/results created!!
+How To
+  - run ./do.sh
+
+NOTES
+  - session id cookie needs.
+  - my temporal id is written in "do.sh"
 
 TODO
   - python code refatoring. functionize
-  - make master shell script.
-  - make session cookie to argument 
