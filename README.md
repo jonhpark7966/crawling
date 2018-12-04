@@ -9,3 +9,8 @@ NOTES
 
 TODO
   - python code refatoring. functionize
+
+
+visualize
+  - dependancy: nanum font
+  - https://pinkwink.kr/1133
