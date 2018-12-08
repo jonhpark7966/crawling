@@ -12,7 +12,7 @@ cd ../
 
 echo "STEP3 infos starts"
 cd step3_infos
-./get_info.py bwytqqduugzrg43o2q0sgjj1
+./get_info.py nvs42hjy2idjgx5iapu0iowo
 cd ../
 
 cd data

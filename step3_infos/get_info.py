@@ -13,16 +13,23 @@ import sys
 def id_generator(size=10, chars=string.ascii_uppercase + string.digits):
    return ''.join(random.choice(chars) for _ in range(size))
 
+def dot_if_empty(text):
+    if len(text) == 0:
+        return '.'
+    else:
+        return text
+  
+
 def parser(html_text, csv_writer):
     soup = BeautifulSoup(html_text, 'html.parser')
 
     #birth, sex, bar exam, bar period, lawyer exam
     infos_first = soup.select('#lawyer_info_tit > span > em')
-    birth = ''
-    sex = ''
-    bar_exam = ''
-    bar_period = ''
-    lawyer_exam = ''
+    birth = '.'
+    sex = '.'
+    bar_exam = '.'
+    bar_period = '.'
+    lawyer_exam = '.'
     if len(infos_first) > 0:
         for info in infos_first:
             if "년생" in info.text:
@@ -38,8 +45,8 @@ def parser(html_text, csv_writer):
     ####################################################
 
     #major(전문), staple(주요)
-    major = ''
-    staple = ''
+    major = '.'
+    staple = '.'
     lawyer_info_divs = soup.select('div.lawyer_info > span')
     assert(len(lawyer_info_divs) > 0) # check layer_info _default exist!
     for content in lawyer_info_divs:
@@ -56,17 +63,17 @@ def parser(html_text, csv_writer):
 
 
     #company, job, position, address
-    company = ''
-    job = ''
-    position = ''
-    address = ''
+    company = '.'
+    job = '.'
+    position = '.'
+    address = '.'
     lawyer_info_divs = soup.select('div.lawyer_info')
     assert(len(lawyer_info_divs) > 0)
     for content in lawyer_info_divs:
         if "현직 정보" in content.text:
             for cell in content.select('ul > li'):
                 #company
-                if "소속" in cell.text:
+                if "소속" in cell.select('span')[0].text:
                     if len(cell.contents)>1:
                         company = cell.contents[1].strip()
                 #job & position
@@ -101,27 +108,27 @@ def parser(html_text, csv_writer):
             #high school
             if "고등학교" in schs[sch_i].text:
                 highs.append(schs[sch_i].text.strip())
-                st_years.append(schs[sch_i+1].text.strip())
-                ed_years.append(schs[sch_i+2].text.strip())
-                univs.append('')
-                grads.append('')
-                careers.append('')
+                st_years.append(dot_if_empty(schs[sch_i+1].text.strip().split('.')[0]))
+                ed_years.append(dot_if_empty(schs[sch_i+2].text.strip().split('.')[0]))
+                univs.append('.')
+                grads.append('.')
+                careers.append('.')
             #university
             if "대학교" in schs[sch_i].text and "대학원" not in schs[sch_i].text and "LL.M" not in schs[sch_i].text and "석사" not in schs[sch_i].text and "수료" not in schs[sch_i].text and "박사" not in schs[sch_i].text and "Law School" not in schs[sch_i].text and "School of Law" not in schs[sch_i].text:
                 univs.append(schs[sch_i].text.strip().replace("  ","").replace("\r","").replace("\n",""))
-                st_years.append(schs[sch_i+1].text.strip())
-                ed_years.append(schs[sch_i+2].text.strip())
-                highs.append('')
-                grads.append('')
-                careers.append('')
+                st_years.append(dot_if_empty(schs[sch_i+1].text.strip().split('.')[0]))
+                ed_years.append(dot_if_empty(schs[sch_i+2].text.strip().split('.')[0]))
+                highs.append('.')
+                grads.append('.')
+                careers.append('.')
             #graduate school
             if "대학원" in schs[sch_i].text or "LL.M" in schs[sch_i].text or "석사" in schs[sch_i].text or "수료" in schs[sch_i].text or "박사" in schs[sch_i].text or "Law School" in schs[sch_i].text or "School of Law" in schs[sch_i].text:
                 grads.append(schs[sch_i].text.strip().replace("  ","").replace("\r","").replace("\n",""))
-                st_years.append(schs[sch_i+1].text.strip())
-                ed_years.append(schs[sch_i+2].text.strip())
-                highs.append('')
-                univs.append('')
-                careers.append('')
+                st_years.append(dot_if_empty(schs[sch_i+1].text.strip().split('.')[0]))
+                ed_years.append(dot_if_empty(schs[sch_i+2].text.strip().split('.')[0]))
+                highs.append('.')
+                univs.append('.')
+                careers.append('.')
 
             sch_i += 3
     #######################################################
@@ -136,11 +143,11 @@ def parser(html_text, csv_writer):
 
             #career
             careers.append(schs[sch_i].text.strip().replace("  ",""))
-            st_years.append(schs[sch_i+1].text.strip())
-            ed_years.append(schs[sch_i+2].text.strip())
-            highs.append('')
-            univs.append('')
-            grads.append('')
+            st_years.append(dot_if_empty(schs[sch_i+1].text.strip().split('.')[0]))
+            ed_years.append(dot_if_empty(schs[sch_i+2].text.strip().split('.')[0]))
+            highs.append('.')
+            univs.append('.')
+            grads.append('.')
 
             sch_i += 3
     #######################################################
@@ -149,12 +156,12 @@ def parser(html_text, csv_writer):
 
     # to make empty string for first row
     if len(highs) == 0:
-        highs.append('')
-        univs.append('')
-        grads.append('')
-        careers.append('')
-        st_years.append('')
-        ed_years.append('')
+        highs.append('.')
+        univs.append('.')
+        grads.append('.')
+        careers.append('.')
+        st_years.append('.')
+        ed_years.append('.')
     ##################################
 
     # write first row
