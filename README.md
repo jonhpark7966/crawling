@@ -5,7 +5,7 @@ How To
 
 NOTES
   - session id cookie needs.
-  - my temporal id is written in "do.sh"
+  - ??98 of years should be handled
 
 TODO
   - python code refatoring. functionize
