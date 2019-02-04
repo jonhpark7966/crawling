@@ -10,10 +10,6 @@ import sys
 sys.path.append('../classes')
 from lawnbLawyer import Lawyer
 
-def id_generator(size=10, chars=string.ascii_uppercase + string.digits):
-   return ''.join(random.choice(chars) for _ in range(size))
-
-  
 
 
 ###########################################################
@@ -25,13 +21,15 @@ if len(sys.argv) != 2:
 
 
 write_file_name = '../data/results/all_lawyers'
+write_file_name = '../data/results/all_lawyers_add'
+
 fw = open(write_file_name, 'w', newline='\n')
 f_writer = csv.writer(fw, delimiter = '\t', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
 
+#file_name = '../data/members/lawyers.txt'
+file_name = '../data/members/add_lawyers.txt'
 
-
-file_name = '../data/members/lawyers.txt'
 f_sid = open(file_name)
 
 
