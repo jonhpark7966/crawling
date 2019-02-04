@@ -40,16 +40,85 @@ def get_grad_id(text):
     f.close()
     return '.'
 
+def add_space_to_careers(career):
+    return career.replace("법무법인", " 법무법인 ").replace("법률사무소", " 법률사무소 ").replace("(", " (").replace(")", " ) ")
 
-def get_company_id(text):
-    f = open("../data/offices/all.txt")
+def get_company_id(text, st_year, version):
+#    if version == "1":
+#        founders_file = '../data/founders.csv'
+#    elif version == "2":
+#        founders_file = '../data/founders_v2.csv'
+#    f = open(founders_file)
+#    for line in f.readlines():
+#        if " " + line.split(',')[0].strip() + " " in " " + add_space_to_careers(text) + " ":
+#            if st_year is not '.':
+#                if int(line.split(',')[2].strip()) <= int(st_year):
+#                    return line.split(',')[1].strip()
+#    f.close()
+
+    f = open("../data/firmlist_1643.csv")
+    #f = open("../data/companies_Final_Jan27.csv")
     for line in f.readlines():
-        if line.split(',')[0].strip() in text:
-            return line.split(',')[1].strip()
+        if " " + line.split(',')[0].strip() + " " in " " + add_space_to_careers(text) + " ":
+            return line.split(',')[2].strip()
+#            if st_year is not '.' and line.split(',')[1] is not '.':
+#                if int(line.split(',')[1].strip()) <= int(st_year):
+#                    return line.split(',')[2].strip()
     f.close()
+
+    if "판사" in text:
+        return '9999'
+    elif "검사" in text:
+        return '99999'
+
+    return '.'
+
+def is_founder(lawyer_id, career, st_year, version, flag):
+# tmporal comment...
+#    if version == "1":
+#        founders_file = '../data/founders.csv'
+#    elif version == "2":
+#        founders_file = '../data/founders_v2.csv'
+#    f = open(founders_file)
+#    for line in f.readlines():
+#        if lawyer_id in line:
+#            if " " + line.split(',')[0].strip() + " " in " " + add_space_to_careers(career) + " ":
+#                if st_year is not '.':
+#                    if int(line.split(',')[2].strip()) <= int (st_year):
+#                        flag = True
+#                        return '1'
+#
+    return '0'
+
+def is_partener(text):
+
+    if "대표" in text:
+        return '1'
+    elif "파트너변호사판사" in text:
+        return '1'
     return '.'
 
 
+
+
+
+
+
+
+
+def in_founder_list(lawyer_id, version):
+    ret = []
+    if version == "1":
+        founders_file = '../data/founders.csv'
+    elif version == "2":
+        founders_file = '../data/founders_v2.csv'
+    f = open(founders_file)
+    for line in f.readlines():
+        if lawyer_id in line:
+            ret.append(line)
+    return ret 
+
+        
 
 
 
@@ -57,6 +126,7 @@ class Lawyer:
     def create(self, html_text, lawyer_sid):
 
         self.sid = lawyer_sid
+        self.founder_flag = False
     
         soup = BeautifulSoup(html_text, 'html.parser')
 
@@ -201,12 +271,22 @@ class Lawyer:
             self.ed_years.append('.')
         ##################################
 
-    def write(self, csv_writer):
+    def write(self, csv_writer, version):
         # write first row
-        csv_writer.writerow([self.name, self.sid, self.birth, self.sex, self.bar_exam, self.bar_period, self.lawyer_exam, self.major, self.staple, self.st_years[0], self.ed_years[0], self.highs[0], get_high_id(self.highs[0]), self.univs[0], get_univ_id(self.univs[0]), self.grads[0], get_grad_id(self.grads[0]), self.careers[0], get_company_id(self.careers[0])])
+        #csv_writer.writerow(["Name", "ID", "Birth", "Sex", "Bar Exam", "Bar Period", "Lawyer Exam", "Major", "Staple", "Start Year", "End Year", "High School", "High School ID", "University", "University ID",  "Graduate School", "Graduate School ID", "Career", "Company ID", "If Founder"])
+        csv_writer.writerow([self.name, self.sid, self.birth, self.sex, self.bar_exam, self.bar_period, self.lawyer_exam, self.major, self.staple, self.st_years[0], self.ed_years[0], self.highs[0], get_high_id(self.highs[0]), self.univs[0], get_univ_id(self.univs[0]), self.grads[0], get_grad_id(self.grads[0]), self.careers[0], get_company_id(self.careers[0], self.st_years[0], version), is_partener(self.careers[0])])
+
         # write rows
         for i in range(1, len(self.grads)):
-            csv_writer.writerow(['', '', '', '', '', '', '', '', '', self.st_years[i], self.ed_years[i], self.highs[i],  get_high_id(self.highs[i]), self.univs[i], get_univ_id(self.univs[i]), self.grads[i], get_grad_id(self.grads[i]), self.careers[i], get_company_id(self.careers[i])])
+            csv_writer.writerow([self.name, self.sid, self.birth, self.sex, self.bar_exam, self.bar_period, self.lawyer_exam, self.major, self.staple, self.st_years[i], self.ed_years[i], self.highs[i],  get_high_id(self.highs[i]), self.univs[i], get_univ_id(self.univs[i]), self.grads[i], get_grad_id(self.grads[i]), self.careers[i], get_company_id(self.careers[i], self.st_years[i], version), is_partener(self.careers[i])])
+
+        #insert additional rows for founders. only if self is in founder list but self was not matched.
+        #founded_firms = in_founder_list(self.sid, version)
+        #if founded_firms and self.founder_flag == False:
+        #    for founded_firm in founded_firms:
+        #        founder_info = founded_firm.split(',')
+        #        csv_writer.writerow([self.name, self.sid, self.birth, self.sex, self.bar_exam, self.bar_period, self.lawyer_exam, self.major, self.staple, founder_info[2].strip(), founder_info[2].strip(), '.',  '.', '.', '.', '.', '.', founder_info[0].strip(), founder_info[1].strip(), '1'])
+
 
     def get_career(self, year, c_name):
         i = 0
