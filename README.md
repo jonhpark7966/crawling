@@ -1,16 +1,11 @@
-# Korean Lawer Crawling
+# Korean Lawyer Crawling
 
-How To
-  - run ./do.sh
+## Introduction
 
-NOTES
-  - session id cookie needs.
-  - ??98 of years should be handled
+Crawling data of all korean lawyers from lawynb.com
+Result data is hided.
 
-TODO
-  - python code refatoring. functionize
-
-
-visualize
-  - dependancy: nanum font
-  - https://pinkwink.kr/1133
+## How To
+  - ```cd ./process```
+  - ```./4_parse_lawyer_v1.py``` --> parsed data is created in ../data/lawyers_v1/
+  - ```./13_add_annual_v1.py > OUTPUT.csv``` --> resize the data by annual carrer.
