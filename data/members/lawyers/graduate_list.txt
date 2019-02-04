@@ -1,0 +1,93 @@
+1	Georgetown
+1	조지타운
+2	한동
+2	Handong International
+3	Cornell
+3	미국 코넬
+4	NYU
+4	뉴욕
+4	Newyork
+4	New York University
+5	미시간
+5	University of Michigan
+6	미국 조지워싱턴
+6	George Washington University
+7	Washington University in St. Louis
+7	미국 Washington
+7	미국 워싱턴
+7	University of Washington
+8	노스웨스턴
+8	Northwestern
+9	하버드
+9	Harvard
+10	컬럼비아
+10	Columbia
+11	KAIST
+11	한국과학기술원
+12	Berkeley
+13	Davis
+14	Gould
+15	Indiana University
+16	University of Virginia
+17	Boston
+18	California Western
+19	University of Notre Dame
+20	Vanderbilt
+21	University of Minnesota
+22	큐슈
+23	창원
+24	Emory University
+25	University of San Diego
+26	명지
+27	Brooklyn
+28	Fordham University
+29	Loyola
+30	Pennsylvania
+31	동경
+32	청주
+33	Duke
+34	Southern Methodist University Dedman
+35	Stanford
+36	Wake Forest University
+37	국방
+38	Tulane
+39	Fordham University
+40	Santa Clara University
+41	경남
+42	숭실
+43	북경
+44	한국해양
+45	Yale
+46	홍익
+47	국민
+48	제주
+49	Southern California
+50	조선
+51	광운
+52	UCLA
+53	강원
+54	동국
+55	원광
+56	단국
+57	영남
+58	충북
+59	인하
+60	아주
+61	중앙
+62	동아
+63	서강
+64	전북
+65	충남
+66	한국외국어
+67	건국
+68	서울시립
+69	전남
+70	이화여자
+71	경북
+72	부산
+73	경희
+74	한양
+75	성균관
+76	연세
+77	고려
+78	서울
